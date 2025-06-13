@@ -34,7 +34,12 @@ const puzzleGrid = [
   ],
 ];
 
-export const getRandomPuzzle = () => {
-  const index = Math.floor(Math.random() * puzzleGrid.length);
-  return puzzleGrid[index];
+export const getRandomPuzzle = (prevPuzzle ? : number[][]) => {
+let puzzle;
+do {
+    const index = Math.floor(Math.random() * puzzleGrid.length);
+    puzzle = puzzleGrid[index];
+} while (puzzle === prevPuzzle);
+
+return puzzle;
 };

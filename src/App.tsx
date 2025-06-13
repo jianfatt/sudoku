@@ -3,7 +3,7 @@ import { getRandomPuzzle } from './puzzle';
 import './App.css';
 
 const App = () => {
-  const puzzle = getRandomPuzzle();
+  const [puzzle, setPuzzle] = useState(getRandomPuzzle());
 
   const [cells, setCells] = useState(
     puzzle.flat().map((num) => ({
@@ -20,6 +20,24 @@ const App = () => {
         i === index ? { ...cell, value: newValue } : cell
       )
     );
+  };
+
+  const handleNewGame = () => {
+    const newPuzzle = getRandomPuzzle(puzzle);
+    setPuzzle(newPuzzle) 
+    const newCells = newPuzzle.flat().map((num) => ({
+      value: num === 0 ? '' : num.toString(),
+      readOnly: num !== 0,
+    }));
+    setCells(newCells);
+  };
+
+  const handleReset = () => {
+    const resetCells = puzzle.flat().map((num) => ({
+      value: num === 0 ? '' : num.toString(),
+      readOnly: num !== 0,
+    }));
+    setCells(resetCells);
   };
 
   return (
@@ -42,6 +60,8 @@ const App = () => {
           />
         )}
       </div>
+      <button onClick={handleNewGame}>New Game</button>
+      <button onClick={handleReset}>Reset</button>
     </div>
   );
 };
